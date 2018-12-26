@@ -6,7 +6,7 @@ import { PhotoController } from './photo.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Photo])],//forFeature 是用於存取相關的entity。
-    providers: [PhotoService], // import PhotoService
+    providers: [PhotoService], // import PhotoService 及pipe
     controllers: [PhotoController]
 })  // import PhotoController
 export class PhotoModule {}

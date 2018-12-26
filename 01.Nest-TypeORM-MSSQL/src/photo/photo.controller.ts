@@ -1,7 +1,8 @@
-import { Get, Post, Controller, Param, Body, Delete, Query ,Header } from '@nestjs/common';
+import { Get, Post, Controller, Param, Body, Delete, Query ,Header, UsePipes} from '@nestjs/common';
 import { PhotoService } from './photo.service';
 import { Photo } from '../Entity/photo.entity';
-
+import { ValidationPipe } from './photo.pipes';  //New import pipes 
+import { CreatePhotoDto } from '../DTO/photo.otd' //New import DTO
 
 @Controller('photo')
 export class PhotoController {
@@ -35,7 +36,8 @@ export class PhotoController {
 
     //範例裡新增及變更都用Post，以id欄位作為識別
     @Post()
-    savePhoto(@Body() photo: any) {
+    @UsePipes(ValidationPipe)   //增加UsePipes
+    savePhoto(@Body() photo: CreatePhotoDto) {        
         if (photo.id) {
             this.PhotoService.updatePhoto(photo);                        
             return `photo id: #${photo.id} updatePhoto OK`;

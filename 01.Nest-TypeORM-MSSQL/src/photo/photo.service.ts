@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Photo } from 'src/Entity/photo.entity';
 import { FakeData } from '../fakedata/fakeuser.mock';
-import { checkServerIdentity } from 'tls';
 
 
 @Injectable()
@@ -35,7 +34,7 @@ export class PhotoService {
         return this.photoRepository.save(this.inFakeUsers);
     }
 
-    async insertPhoto(data) {
+    async insertPhoto(data){
         const photo = await new Photo();
         photo.name = data.name;
         photo.description = data.description;
