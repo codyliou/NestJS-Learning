@@ -5,6 +5,7 @@ import { Photo } from 'src/Entity/photo.entity';
 import { FakeData } from '../fakedata/fakeuser.mock';
 
 
+
 @Injectable()
 export class PhotoService {
 
@@ -56,5 +57,23 @@ export class PhotoService {
 
     deletePhoto(id){
         this.photoRepository.remove(id);
+    }
+
+    async uploadFile(upfile){                                
+        console.log("file Upload...OK");   
+        return {
+            name: upfile.originalname,
+            type: upfile.mimetype,
+            size: upfile.size,            
+            filename: upfile.filename,
+            path: upfile.path
+        };     
+        
+    }   
+    
+    //多筆上傳,直接將上傳的資作Return
+    async uploadFiles(files){
+        console.log("file Upload...OK");   
+        return files
     }
 }

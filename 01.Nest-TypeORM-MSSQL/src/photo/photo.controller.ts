@@ -1,4 +1,5 @@
-import { Get, Post, Controller, Param, Body, Delete, Query ,Header, UsePipes} from '@nestjs/common';
+import { Get, Post, Controller, Param, Body, Delete, Query ,Header, UsePipes, UseInterceptors, FileInterceptor, UploadedFile, FileFieldsInterceptor, UploadedFiles} from '@nestjs/common';
+// import FileInterceptor,UploadedFile,FileFieldsInterceptor,UploadedFiles
 import { PhotoService } from './photo.service';
 import { Photo } from '../Entity/photo.entity';
 import { ValidationPipe } from './photo.pipes';  //New import pipes 
@@ -51,6 +52,24 @@ export class PhotoController {
     deletePhone(@Body () id: string ){
         this.PhotoService.deletePhoto(id);        
         return `deletePhoto OK`;
+    }    
+
+    //File Uploas單筆上傳
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file'))
+    async UploadedFile(@UploadedFile() upfile){
+        console.log(upfile);
+        return this.PhotoService.uploadFile(upfile);
     }
     
+
+    //File Uploas多筆上傳
+    @Post('uploads')
+    @UseInterceptors(FileFieldsInterceptor([
+      { name: 'files', maxCount: 3 },  //指定KEY名稱為files,最多限制3筆
+    ]))
+    async uploadFiles(@UploadedFiles() files) {
+      console.log(files);    
+      return this.PhotoService.uploadFiles(files);
+    }
 }
