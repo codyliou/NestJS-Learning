@@ -59,6 +59,7 @@ export class PhotoService {
         this.photoRepository.remove(id);
     }
 
+    //單筆上傳,限定只回傳originalname,mimetype,size,filename,path
     async uploadFile(upfile){                                
         console.log("file Upload...OK");   
         return {
@@ -66,7 +67,8 @@ export class PhotoService {
             type: upfile.mimetype,
             size: upfile.size,            
             filename: upfile.filename,
-            path: upfile.path
+            path: upfile.path,
+            FileFormat: upfile.originalname.split('.').pop() //取得副檔名
         };     
         
     }   
@@ -74,6 +76,6 @@ export class PhotoService {
     //多筆上傳,直接將上傳的資作Return
     async uploadFiles(files){
         console.log("file Upload...OK");   
-        return files
+        return files        
     }
 }
